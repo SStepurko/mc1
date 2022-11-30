@@ -35,7 +35,8 @@ public class WebController {
 	}
 
 	@PostMapping
-	public void receiveMessage(@RequestBody Message message) {
+	public ResponseEntity<String> receiveMessage(@RequestBody Message message) {
 		service.saveMessage(message);
+		return ResponseEntity.ok("Saved");
 	}
 }

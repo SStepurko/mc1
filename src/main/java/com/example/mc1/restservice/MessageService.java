@@ -15,6 +15,7 @@ public class MessageService {
 	}
 
 	public void saveMessage(Message message) {
+		message.setEndTimestamp(new Date(System.currentTimeMillis()));
 		repository.save(message);
 	}
 
