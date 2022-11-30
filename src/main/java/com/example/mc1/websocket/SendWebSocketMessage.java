@@ -1,6 +1,6 @@
 package com.example.mc1.websocket;
 
-import com.example.mc1.restservice.MessageEntity;
+import com.example.mc1.restservice.Message;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
@@ -10,12 +10,9 @@ import org.springframework.web.socket.client.WebSocketClient;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 
-import java.net.URI;
-import java.net.http.WebSocket;
-
 public class SendWebSocketMessage {
 
-	public static void sendWebSocket(MessageEntity message) {
+	public static void sendWebSocket(Message message) {
 //		MessageEntity messageEntity = message;
 		WebSocketClient client = new StandardWebSocketClient();
 		WebSocketStompClient stompClient = new WebSocketStompClient(client);

@@ -1,7 +1,6 @@
 package com.example.mc1.restservice;
 
 import com.example.mc1.websocket.SendWebSocketMessage;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,9 +17,8 @@ public class WebController {
 	@GetMapping(value = "/start/")
 	public ResponseEntity<String> startSending() {
 		try {
-			MessageEntity message = service.generateMessage();
+			Message message = service.generateMessage();
 			SendWebSocketMessage.sendWebSocket(message);
-//			SendWebSocketMessage.sendWebSocket(null);
 			return ResponseEntity.ok("Started");
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body("Bad request");
@@ -37,7 +35,7 @@ public class WebController {
 	}
 
 	@PostMapping
-	public void receiveMessage(@RequestBody MessageEntity message){
+	public void receiveMessage(@RequestBody Message message) {
 		service.saveMessage(message);
 	}
 }

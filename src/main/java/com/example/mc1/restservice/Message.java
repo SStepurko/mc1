@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Entity
 @Table
-public class MessageEntity {
+public class Message {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,10 +21,10 @@ public class MessageEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date endTimestamp;
 
-	public MessageEntity() {
+	public Message() {
 	}
 
-	public MessageEntity(Long sessionId, Date mc1Timestamp, Date mc2Timestamp, Date mc3Timestamp, Date endTimestamp) {
+	public Message(Long sessionId, Date mc1Timestamp, Date mc2Timestamp, Date mc3Timestamp, Date endTimestamp) {
 		this.sessionId = sessionId;
 		this.mc1Timestamp = mc1Timestamp;
 		this.mc2Timestamp = mc2Timestamp;
@@ -32,7 +32,7 @@ public class MessageEntity {
 		this.endTimestamp = endTimestamp;
 	}
 
-	public MessageEntity(Long sessionId, Date mc1Timestamp) {
+	public Message(Long sessionId, Date mc1Timestamp) {
 		this.sessionId = sessionId;
 		this.mc1Timestamp = mc1Timestamp;
 	}
@@ -88,7 +88,7 @@ public class MessageEntity {
 
 	@Override
 	public String toString() {
-		return "ServiceMessage{" +
+		return "Message{" +
 				"id=" + id +
 				", sessionId=" + sessionId +
 				", mc1Timestamp=" + mc1Timestamp +

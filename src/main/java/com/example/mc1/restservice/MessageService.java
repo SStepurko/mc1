@@ -14,12 +14,15 @@ public class MessageService {
 		this.repository = repository;
 	}
 
-	public void saveMessage(MessageEntity message) {
+	public void saveMessage(Message message) {
 		repository.save(message);
 	}
 
-	public MessageEntity generateMessage() {
-		this.sessionNumber ++;
-		return new MessageEntity(sessionNumber, new Date(System.currentTimeMillis()));
+	public Message generateMessage() {
+		Message message = new Message();
+		this.sessionNumber++;
+		message.setMc1Timestamp(new Date(System.currentTimeMillis()));
+		message.setSessionId(sessionNumber);
+		return message;
 	}
 }
