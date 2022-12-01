@@ -13,44 +13,105 @@ import java.util.TimerTask;
 @Component
 public class ProcessController {
 
+	private static boolean isRunning;
 	private final MessageService service;
 	private final ConfigReader config;
+	Timer timer = new Timer();
+
+	MyThread runThread = new MyThread();
+	TimerTask stopTimerTask = new TimerTask() {
+		@Override
+		public void run() {
+			isRunning = false;
+			Results.stopCount();
+			runThread.pause();
+			timer.cancel();
+			timer.purge();
+		}
+	};
 
 	public ProcessController(MessageService service, ConfigReader config) {
 		this.service = service;
 		this.config = config;
+		isRunning = false;
 	}
 
-	Timer timer = new Timer();
-	TimerTask runTimerTask = new TimerTask() {
-		@Override
-		public void run() {
-			Message message = service.generateMessage();
-			SendWebSocketMessage.sendWebSocket(message);
+	private void startRunTimerTask(long delay, long period) {
+		Results.startCount();
+		if (runThread.isWasStarted()) {
+			runThread.resumeIt();
+		} else {
+			runThread.start();
 		}
-	};
-	TimerTask stopTimerTask = new TimerTask() {
-		@Override
-		public void run() {
-			runTimerTask.cancel();
-			timer.cancel();
-		}
-	};
 
-	private void setRunTimerTask(long delay, long period) {
-		timer.schedule(runTimerTask, 0, period);
+		Timer timer = new Timer();
 		timer.schedule(stopTimerTask, delay);
 	}
 
 	public void setRunTimerTask() {
-		Map<String, Integer> confMap = new HashMap<>();
+//		do nothing if running
+		if (isRunning) {
+			return;
+		}
+//		get from config
+		Map<String, Long> confMap = new HashMap<>();
 		confMap = config.getProperties();
-
-		setRunTimerTask(confMap.get(config.getRuntimeKey()), confMap.get(config.getPeriodKey()));
+		startRunTimerTask(confMap.get(config.getRuntimeKey()), confMap.get(config.getPeriodKey()));
 	}
 
 	public void stopRunTimerTask() {
-		timer.schedule(stopTimerTask, 0);
+		if (isRunning) {
+			timer.cancel();
+			timer.purge();
+			timer = null;
+			runThread.pause();
+			Results.stopCount();
+			isRunning = false;
+		}
 	}
 
+
+	/**
+	 * thread with pause and stop
+	 */
+	class MyThread extends Thread {
+		private boolean run;
+		private boolean wasStarted;
+
+		public MyThread() {
+		}
+
+		@Override
+		public void run() {
+			this.run = true;
+			while (run) {
+				isRunning = true;
+				Message message = service.generateMessage();
+				SendWebSocketMessage.sendWebSocket(message);
+				Results.countMessage();
+			}
+		}
+
+		@Override
+		public synchronized void start() {
+			this.setWasStarted(true);
+			super.start();
+		}
+
+		public void pause() {
+			this.run = false;
+		}
+
+		public void resumeIt() {
+			this.run = true;
+		}
+
+		public boolean isWasStarted() {
+			return wasStarted;
+		}
+
+		public void setWasStarted(boolean wasStarted) {
+			this.wasStarted = wasStarted;
+		}
+	}
 }

@@ -1,7 +1,6 @@
 package com.example.mc1.restservice;
 
 import com.example.mc1.service.ProcessController;
-import com.example.mc1.websocket.SendWebSocketMessage;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,10 +20,9 @@ public class WebController {
 	public ResponseEntity<String> startSending() {
 		try {
 			controller.setRunTimerTask();
-//			Message message = service.generateMessage();
-//			SendWebSocketMessage.sendWebSocket(message);
 			return ResponseEntity.ok("Started");
 		} catch (Exception e) {
+			e.printStackTrace();
 			return ResponseEntity.badRequest().body("Bad request");
 		}
 	}
@@ -35,6 +33,7 @@ public class WebController {
 			controller.stopRunTimerTask();
 			return ResponseEntity.ok("Stopped");
 		} catch (Exception e) {
+			e.printStackTrace();
 			return ResponseEntity.badRequest().body("Bad request");
 		}
 	}

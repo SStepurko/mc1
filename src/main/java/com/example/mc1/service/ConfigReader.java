@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class ConfigReader {
@@ -19,7 +20,7 @@ public class ConfigReader {
 	private final int periodKeyDefault = 1;
 	Properties properties = new Properties();
 
-	public Map<String, Integer> getProperties() {
+	public Map<String, Long> getProperties() {
 
 		try (FileInputStream fis = new FileInputStream(fileName)) {
 			properties.load(fis);
@@ -27,17 +28,17 @@ public class ConfigReader {
 			e.printStackTrace();
 		}
 
-		Map<String, Integer> map = new HashMap<>();
+		Map<String, Long> map = new HashMap<>();
 //		check runtime and try to convert it to int
-		int runTimeValue;
+		long runTimeValue;
 		try {
-			runTimeValue = Integer.parseInt(properties.getProperty(runtimeKey));
+			runTimeValue = TimeUnit.SECONDS.toMillis(Integer.parseInt(properties.getProperty(runtimeKey)));
 		} catch (NumberFormatException e) {
 			runTimeValue = runtimeKeyDefault;
 			e.printStackTrace();
 		}
 //		check period and try to convert it to int
-		int periodValue;
+		long periodValue;
 		try {
 			periodValue = Integer.parseInt(properties.getProperty(periodKey));
 		} catch (NumberFormatException e) {
