@@ -11,7 +11,7 @@ public class Results {
 	private static long messageCount;
 
 	/**
-	 * Starts counting and and reset the message counter
+	 * Starts counting and reset the message counter
 	 */
 	public static void startCount() {
 		System.out.println("Process started");
@@ -36,7 +36,7 @@ public class Results {
 		}
 		Date stopDate = new Date(System.currentTimeMillis());
 		long interactionTime = TimeUnit.MILLISECONDS.toSeconds(stopDate.getTime() - startDate.getTime());
-		System.out.printf("Interaction time %s \n%d Messages sent", interactionTime, messageCount);
+		System.out.printf("Interaction time %s \n%d Messages sent\n", interactionTime, messageCount);
 		startDate = null;
 	}
 

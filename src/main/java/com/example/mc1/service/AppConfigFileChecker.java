@@ -27,9 +27,9 @@ public class AppConfigFileChecker {
 				FileWriter fileWriter = new FileWriter(fileName);
 				fileWriter.write("""
 						# Длительность интервала взаимодействия задается в секундах
-						# runtime = 30
+						runtime = 30
 						# Периодичность отправки сообщений задается в милисекундах
-						# period = 1000""");
+						period = 1000""");
 				fileWriter.close();
 			}
 		};

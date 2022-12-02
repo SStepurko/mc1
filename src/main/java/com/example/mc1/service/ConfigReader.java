@@ -18,7 +18,7 @@ public class ConfigReader {
 	//	app config file properties
 	private final String runtimeKey = "runtime";
 	private final String periodKey = "period";
-	private final String fileName = "config/app.config";
+	private final String fileName = "./config/app.config";
 	private final int runtimeKeyDefault = 1;
 	private final int periodKeyDefault = 1;
 	Properties properties = new Properties();

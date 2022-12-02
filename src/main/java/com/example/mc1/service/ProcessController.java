@@ -63,10 +63,9 @@ public class ProcessController {
 		currentJob = service.submit(() -> {
 			Results.startCount();
 			while (true) {
-				Message message = messageService.generateMessage();
-				SendWebSocketMessage.sendWebSocket(message);
+//				Message message = messageService.generateMessage();
+//				SendWebSocketMessage.sendWebSocket(message);
 				Results.countMessage();
-				System.out.println("task is running");
 				Thread.sleep(periodMs);
 			}
 		});
