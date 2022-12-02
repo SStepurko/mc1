@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 
 import java.util.Date;
 
+/**
+ * Message entity.
+ */
 @Entity
 @Table
 public class Message {

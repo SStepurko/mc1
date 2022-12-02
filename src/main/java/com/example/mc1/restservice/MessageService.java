@@ -14,11 +14,18 @@ public class MessageService {
 		this.repository = repository;
 	}
 
+	/**
+	 * Sets end time stamp for the message and saves it to DB
+	 */
 	public void saveMessage(Message message) {
 		message.setEndTimestamp(new Date(System.currentTimeMillis()));
 		repository.save(message);
 	}
 
+	/**
+	 * Created the new message and set ime stamp mc1
+	 * @return new message with current time stamp
+	 */
 	public Message generateMessage() {
 		Message message = new Message();
 		this.sessionNumber++;

@@ -9,6 +9,9 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Read two options (period and runtime) from config file (config/app.config).
+ */
 @Component
 public class ConfigReader {
 
@@ -20,6 +23,11 @@ public class ConfigReader {
 	private final int periodKeyDefault = 1;
 	Properties properties = new Properties();
 
+	/**
+	 * Get properties form config file or default values
+	 *
+	 * @return "runtime" long(1 sec default), "period" long (1 ms default)
+	 */
 	public Map<String, Long> getProperties() {
 
 		try (FileInputStream fis = new FileInputStream(fileName)) {
@@ -56,5 +64,9 @@ public class ConfigReader {
 
 	public String getPeriodKey() {
 		return periodKey;
+	}
+
+	public String getFileName() {
+		return fileName;
 	}
 }

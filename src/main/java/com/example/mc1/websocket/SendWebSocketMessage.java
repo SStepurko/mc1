@@ -10,10 +10,12 @@ import org.springframework.web.socket.client.WebSocketClient;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 
+/**
+ * Sends to websocket microservice message
+ */
 public class SendWebSocketMessage {
 
 	public static void sendWebSocket(Message message) {
-//		MessageEntity messageEntity = message;
 		WebSocketClient client = new StandardWebSocketClient();
 		WebSocketStompClient stompClient = new WebSocketStompClient(client);
 		stompClient.setMessageConverter(new MappingJackson2MessageConverter());
@@ -24,7 +26,7 @@ public class SendWebSocketMessage {
 				super.afterConnected(session, connectedHeaders);
 			}
 		};
-		stompClient.connectAsync("ws://localhost:10002/ws-server", sessionHandler);
+		stompClient.connectAsync("ws://mc2:10002/ws-server", sessionHandler);
 
 	}
 

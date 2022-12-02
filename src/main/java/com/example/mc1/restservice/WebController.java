@@ -4,6 +4,12 @@ import com.example.mc1.service.ProcessController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Web endpoints controller.
+ * /api/start for start sending messages
+ * /api/stop for stop sending messages
+ * /api for receiving messages from microservice3
+ */
 @RestController
 @RequestMapping(path = "/api")
 public class WebController {
